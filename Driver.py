@@ -80,47 +80,44 @@ if __name__ == "__main__":
 
 # testing
     test_results = [[], [], [], [], []]
-    for i in range(len(Samples)):
+    for i in range(Samples):
         for j in range(len(WhichAlgos)):
             if WhichAlgos[i] == 1:
                 for k in range(len(TestArrays)):
+                    temp = TestArrays[i]
                     begin = time.time()
-                    quicksort(TestArrays[i])
+                    quicksort(temp)
                     end = time.time()
-                    test_results[i].append(end-begin)
+                    test_results[0].append(end-begin)
             if WhichAlgos[i] == 2:
                 for k in range(len(TestArrays)):
+                    temp = TestArrays[i]
                     begin = time.time()
-                    mergesort(TestArrays[i])
+                    mergesort(temp)
                     end = time.time()
-                    test_results[i].append(end-begin)
+                    test_results[1].append(end-begin)
 
             if WhichAlgos[i] == 3:
                 for k in range(len(TestArrays)):
+                    temp = TestArrays[i]
                     begin = time.time()
-                    selectionsort(TestArrays[i])
+                    selectionsort(temp)
                     end = time.time()
-                    test_results[i].append(end-begin)
+                    test_results[2].append(end-begin)
 
             if WhichAlgos[i] == 4:
                 for k in range(len(TestArrays)):
+                    temp = TestArrays[i]
                     begin = time.time()
-                    insertion_sort(TestArrays[i])
+                    insertion_sort(temp)
                     end = time.time()
-                    test_results[i].append(end-begin)
+                    test_results[3].append(end-begin)
 
             if WhichAlgos[i] == 5:
                 for k in range(len(TestArrays)):
+                    temp = TestArrays[i]
                     begin = time.time()
-                    hybridmergeandselectionsort(TestArrays[i])
+                    hybridmergeandselectionsort(temp)
                     end = time.time()
-                    test_results[i].append(end-begin)
-    # visualization
-    plt.title("Running Times")
-    x = ValueOfSamples
-    plt.xlabel("ARRAY SIZE")
-    plt.ylabel("RUNNING TIME IN MS")
-    for i, array in enumerate(test_results):
-        plt.plot(x, array, color=np.random.rand(
-            3, ), marker="o", label=f"Array #{i}")
-    plt.show()
+                    test_results[4].append(end-begin)
+print(test_results)
