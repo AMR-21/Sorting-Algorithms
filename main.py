@@ -87,26 +87,26 @@ def randomPivot(list,left,right):
        
 
 
-def quicksort(list,left,right):
+def quickSort(list,left,right):
     if left < right:
         pivotIndex = randomPivot(list,left,right)
-        quicksort(list,left,pivotIndex-1)
-        quicksort(list,pivotIndex+1,right)
+        quickSort(list,left,pivotIndex-1)
+        quickSort(list,pivotIndex+1,right)
 
 
-def findK(list,k):
+def quickSelect(list,k):
     pivot=list[partition(list,0,len(list)-1)]
     aL = []
-    aR = []
+    aH = []
     for i in range(len(list)):
         if list[i] < pivot:
             aL.append(list[i])
         elif  list[i] > pivot:
-            aR.append(list[i])  
+            aH.append(list[i])  
     if k <=  len(aL):
-        return findK(aL,k)
-    elif k > len(list) - len(aR):
-        return findK(aR,k - (len(list) - len(aR)))
+        return quickSelect(aL,k)
+    elif k > len(list) - len(aH):
+        return quickSelect(aH,k - (len(list) - len(aH)))
   
     return pivot 
 
@@ -137,7 +137,7 @@ def test(sizes):
         rndList = rndUniqueList(size,0,20000)
         testList = deepcopy(rndList)
         begin = time()
-        quicksort(testList,0,len(testList)-1)
+        quickSort(testList,0,len(testList)-1)
         end = time()
         print('\nRunning time for Quick Sort is '+str((end-begin)*1000)+' ms')
         # testList = deepcopy(rndList)
@@ -155,9 +155,13 @@ def test(sizes):
         insertionSort(testList)
         end = time()
         print('Running time for Insertion Sort is '+str((end-begin)*1000)+' ms\n\n')
+
      
 '''Test cases'''
+
 # test([1000,10000,25000,50000,100000])
-testList=[8,7,6,5,4,3,2,1]
-mergesort(testList,0,len(testList)-1)
-print(testList)
+# # Randomly generated array with 50 unique items between 0 and 10000
+# arr = [7838, 5511, 7617, 2935, 4619, 5409, 8602, 1042, 5390, 45, 8110, 3545, 5761, 1666, 5165, 7909, 5178, 2881, 7013, 1104, 9763, 4813, 7043, 7048, 4996, 416, 7076, 5565, 4501, 4680, 5827, 
+#      644, 4566, 3433, 8059, 7132, 780, 7587, 9155, 302, 2742, 141, 7106, 2507, 367, 2384, 6272, 323, 148, 930]
+# # finding the 8th smallest element in the array which is 644
+# quickSelect(arr,8)
