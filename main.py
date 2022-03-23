@@ -62,6 +62,10 @@ def mergesort(test_array,left,right):
        merge(test_array, left, mid, right)
 
 
+def hybridsort(test_array):
+    pass
+
+
 
 '''Quick sort and Quick select'''
 
