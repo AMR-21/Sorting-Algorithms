@@ -14,8 +14,45 @@ def insertion_sort(test_array):
             test_array[j + 1] = key
 
 
-def mergesort(test_array):
-    pass
+def merge(test_array,left,mid,right):
+    s1 = mid-left+1
+    s2 = right - mid
+    L = [0] * (s1)
+    R = [0] * (s2)
+
+    for i in range(0, s1)
+        L[i] = list[left+i]
+
+    for j in range(0, s2)
+        R[j] = list[mid + 1 + j]
+
+    i = 0
+    j = 0
+    k = 1
+    while i < s1 and j < s2:
+        if L[i] <= R[j]:
+            test_array[k] = L[i]
+            i += 1
+        else:
+            test_array[k] = R[j]
+            j += 1
+        k += 1
+    while i < s1:
+        test_array[k] = L[i]
+        i += 1
+        k += 1
+    while j < s2:
+            test_array[k] = R[j]
+            j += 1
+            k += 1
+
+
+def mergesort(test_array,left,right):
+    if left < right:
+       mid = left + (right - 1)//2
+       mergesort(test_array, left, mid)
+       mergesort(test_array, mid + 1, right)
+       merge(test_array, left, mid, right)
 
 
 def hybridsort(test_array):
