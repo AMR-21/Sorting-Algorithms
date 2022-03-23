@@ -1,6 +1,49 @@
-# NOTE:  Picking the Sizes of arrays and the how many arrays used at each size
+
+# Imports
 import random
-import Visualizer
+import matplotlib.pyplot as plt
+import numpy as np
+import time
+
+# Algorithims
+
+
+def insertion_sort(test_array):
+    for i in range(1, len(test_array)):
+        key = test_array[i]
+        j = i-1
+        while j >= 0 and key < test_array[j]:
+            test_array[j + 1] = test_array[j]
+            j -= 1
+            test_array[j + 1] = key
+
+
+def mergesort(test_array):
+    pass
+
+
+def hybridsort(test_array):
+    pass
+
+
+def quicksort(test_array):
+    pass
+
+
+def selectionsort(test_array):
+    for i in range(len(test_array)):
+        min_idx = i
+        for j in range(i+1, len(test_array)):
+            if test_array[min_idx] > test_array[j]:
+                min_idx = j
+        test_array[i], test_array[min_idx] = test_array[min_idx], test_array[i]
+
+
+def hybridmergeandselectionsort(test_array):
+    pass
+
+
+# NOTE:  Picking the Sizes of arrays and the how many arrays used at each size
 if __name__ == "__main__":
     Samples = int(input("NO OF SAMPLES: "))
     ValueOfSamples = []
@@ -34,5 +77,50 @@ if __name__ == "__main__":
                 ArrayToBeTested.append(Digit)
         TestArrays.append(ArrayToBeTested)
 
-    Test = Visualizer.tester()
-    Test.selector(TestArrays, WhichAlgos,ValueOfSamples)
+
+# testing
+    test_results = [[], [], [], [], []]
+    for i in range(len(Samples)):
+        for j in range(len(WhichAlgos)):
+            if WhichAlgos[i] == 1:
+                for k in range(len(TestArrays)):
+                    begin = time.time()
+                    quicksort(TestArrays[i])
+                    end = time.time()
+                    test_results[i].append(end-begin)
+            if WhichAlgos[i] == 2:
+                for k in range(len(TestArrays)):
+                    begin = time.time()
+                    mergesort(TestArrays[i])
+                    end = time.time()
+                    test_results[i].append(end-begin)
+
+            if WhichAlgos[i] == 3:
+                for k in range(len(TestArrays)):
+                    begin = time.time()
+                    selectionsort(TestArrays[i])
+                    end = time.time()
+                    test_results[i].append(end-begin)
+
+            if WhichAlgos[i] == 4:
+                for k in range(len(TestArrays)):
+                    begin = time.time()
+                    insertion_sort(TestArrays[i])
+                    end = time.time()
+                    test_results[i].append(end-begin)
+
+            if WhichAlgos[i] == 5:
+                for k in range(len(TestArrays)):
+                    begin = time.time()
+                    hybridmergeandselectionsort(TestArrays[i])
+                    end = time.time()
+                    test_results[i].append(end-begin)
+    # visualization
+    plt.title("Running Times")
+    x = ValueOfSamples
+    plt.xlabel("ARRAY SIZE")
+    plt.ylabel("RUNNING TIME IN MS")
+    for i, array in enumerate(test_results):
+        plt.plot(x, array, color=np.random.rand(
+            3, ), marker="o", label=f"Array #{i}")
+    plt.show()
