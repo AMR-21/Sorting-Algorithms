@@ -1,13 +1,9 @@
 
 # Imports
 import random
-import matplotlib.pyplot as plt
-import numpy as np
 import time
 
 # Algorithims
-
-
 def insertion_sort(test_array):
     for i in range(1, len(test_array)):
         key = test_array[i]
@@ -24,6 +20,7 @@ def mergesort(test_array):
 
 def hybridsort(test_array):
     pass
+
 
 
 def quicksort(test_array):
