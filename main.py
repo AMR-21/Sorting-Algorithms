@@ -21,7 +21,7 @@ def rndUniqueList(size,min,max):
 '''Algorithms'''
 '''Merge sort and hybrid merge sort'''
 
-def merge(test_array,left,mid,right):
+def merge(list,left,mid,right):
     s1 = mid-left+1
     s2 = right - mid
     L = [0] * (s1)
@@ -35,34 +35,34 @@ def merge(test_array,left,mid,right):
 
     i = 0
     j = 0
-    k = 1
+    k = 0
     while i < s1 and j < s2:
         if L[i] <= R[j]:
-            test_array[k] = L[i]
+            list[k] = L[i]
             i += 1
         else:
-            test_array[k] = R[j]
+            list[k] = R[j]
             j += 1
         k += 1
     while i < s1:
-        test_array[k] = L[i]
+        list[k] = L[i]
         i += 1
         k += 1
     while j < s2:
-            test_array[k] = R[j]
-            j += 1
-            k += 1
+        list[k] = R[j]
+        j += 1
+        k += 1
 
 
-def mergesort(test_array,left,right):
+def mergesort(list,left,right):
     if left < right:
-       mid = left + (right - 1)//2
-       mergesort(test_array, left, mid)
-       mergesort(test_array, mid + 1, right)
-       merge(test_array, left, mid, right)
+       mid = (left + (right - 1))//2
+       mergesort(list, left, mid)
+       mergesort(list, mid + 1, right)
+       merge(list, left, mid, right)
 
 
-def hybridsort(test_array):
+def hybridsort(list):
     pass
 
 
