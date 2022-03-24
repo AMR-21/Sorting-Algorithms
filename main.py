@@ -55,27 +55,22 @@ def merge(list, left, mid, right):
         j+=1
 
 
-def mergeSort(test_array,left,right):
+def mergeSort(list,left,right):
     if left < right:
        mid = (left+right)//2
-       mergeSort(test_array, left, mid)
-       mergeSort(test_array, mid + 1, right)
-       merge(test_array, left, mid, right)
-
+       mergeSort(list, left, mid)
+       mergeSort(list, mid + 1, right)
+       merge(list, left, mid, right)
 
 
 def hybridSort(list, left, right, limit):
-    if len(list) == limit:
-        selectionSort(list)
+    if right - left + 1 <= limit:
+        selectionSort(list,left,right+1)
     else:
-        if left < right:
-            mid = (left+right)//2
-            mergeSort(list, left, mid)
-            mergeSort(list, mid + 1, right)
-            merge(list, left, mid, right)
-
-    
-
+        mid = (left+right)//2
+        hybridSort(list, left, mid,limit)
+        hybridSort(list, mid+ 1, right,limit)
+        merge(list, left, mid, right)
 
 
 '''Quick sort and Quick select'''
@@ -125,55 +120,75 @@ def insertionSort(list):
             list[j] = list[j-1]
             j -= 1
         list[j] = key
-            
-            
-def selectionSort(list):
-    for i in range(len(list)-1):
-        min_idx = i
-        for j in range(i+1, len(list)):
-            if list[min_idx] > list[j]:
-                min_idx = j
-        if i!=min_idx:
-            list[min_idx] , list[i]= list[i] , list[min_idx]           
-                
+                  
 
-'''Test function'''
-#def test(sizes):
- #   for size in sizes:
- #       print('Testing using sample of size =',size)
- #       rndList = rndUniqueList(size,0,200000)
- #       testList = deepcopy(rndList)
- #       begin = time()
-  #      quickSort(testList,0,len(testList)-1)
- #       end = time()
- #       print('\nRunning time for Quick Sort is '+str((end-begin)*1000)+' ms')
- #       testList = deepcopy(rndList)
-  #      begin = time()
- #       mergeSort(testList,0,len(testList)-1)  
- #      end = time()
- #       print('Running time for Merge Sort is '+str((end-begin)*1000)+' ms')
-  #      testList = deepcopy(rndList)
-  #      begin = time()
- #       selectionSort(testList)
- #       end = time()
- #       print('Running time for Selection Sort is '+str((end-begin)*1000)+' ms')
- #       testList = deepcopy(rndList)
- #       begin = time()
- #       insertionSort(testList)
- #       end = time()
-  #      print('Running time for Insertion Sort is '+str((end-begin)*1000)+' ms\n\n')
- #       rndList.clear()
+def selectionSort(list,left,right):
+    for i in range(left,right):
+        minInd = i
+        for j in range(i+1, right):
+            if list[minInd] > list[j]:
+                minInd = j 
+        if i!=minInd:
+            list[minInd] , list[i] = list[i] , list[minInd]        
 
+
+'''Test functions'''
+def test(sizes):
+   for size in sizes:
+       print('Testing using sample of size =',size)
+       rndList = rndUniqueList(size,0,200000)
+       testList = deepcopy(rndList)
+       begin = time()
+       quickSort(testList,0,len(testList)-1)
+       end = time()
+       print('\nRunning time for Quick Sort is '+str((end-begin)*1000)+' ms')
+       testList = deepcopy(rndList)
+       begin = time()
+       mergeSort(testList,0,len(testList)-1)  
+       end = time()
+       print('Running time for Merge Sort is '+str((end-begin)*1000)+' ms')
+       testList = deepcopy(rndList)
+       begin = time()
+       selectionSort(testList,0,len(testList))
+       end = time()
+       print('Running time for Selection Sort is '+str((end-begin)*1000)+' ms')
+       testList = deepcopy(rndList)
+       begin = time()
+       insertionSort(testList)
+       end = time()
+       print('Running time for Insertion Sort is '+str((end-begin)*1000)+' ms\n\n')
+       rndList.clear()
+
+
+def testHybrid(sizes,threshold):
+    for size in sizes:
+       print('Testing using sample of size =',size)
+       rndList = rndUniqueList(size,0,30000)
+       testList = deepcopy(rndList)
+       begin = time()
+       hybridSort(testList, 0, len(testList)-1,threshold)
+       end = time()
+       print('\nRunning time for Hybrid Sort is '+str((end-begin)*1000)+' ms')
+       testList = deepcopy(rndList)
+       begin = time()
+       mergeSort(testList,0,len(testList)-1) 
+       end = time()
+       print('Running time for Merge Sort is '+str((end-begin)*1000)+' ms')
+       testList = deepcopy(rndList)
+       begin = time()
+       selectionSort(testList,0,len(testList))
+       end = time()
+       print('Running time for Selection Sort is '+str((end-begin)*1000)+' ms\n\n')
+       rndList.clear()
+    
      
 '''Test cases'''
-
-# test([100,1000,5000,10000,25000,50000,100000])
+#test algorithms
+test([100,1000,5000,10000,25000,50000,100000])
 # Randomly generated array with 50 unique items between 0 and 10000
 arr = [7838, 5511, 7617, 2935, 4619, 5409, 8602, 1042, 5390, 45, 8110, 3545, 5761, 1666, 5165, 7909, 5178, 2881, 7013, 1104, 9763, 4813, 7043, 7048, 4996, 416, 7076, 5565, 4501, 4680, 5827, 
       644, 4566, 3433, 8059, 7132, 780, 7587, 9155, 302, 2742, 141, 7106, 2507, 367, 2384, 6272, 323, 148, 930]
-#print(quickSelect(arr,8,0,len(arr)-1))
-#arr = [5,8,25,16,13,124,1,88,75,44,64,32]
-hybridSort(arr, 0, len(arr)-1,6)
-print(arr)
+# test quick select
+print(quickSelect(arr,8,0,len(arr)-1))
 # hybrid sort of the array 
-# hybridSort(arr)
+testHybrid([50,100,1000,10000,25000],10)
