@@ -1,6 +1,5 @@
 
 # Imports
-from operator import le
 from random import randrange as rnd
 from time import time
 from copy import deepcopy
@@ -22,7 +21,8 @@ def rndUniqueList(size,min,max):
 '''Algorithms'''
 '''Merge sort and hybrid merge sort'''
 
-def merge(list,left,mid,right):
+
+def merge(list, left, mid, right):
     nL = mid - left + 1
     nH = right - mid
     aL=[]
@@ -118,19 +118,22 @@ def quickSelect(list,k):
 def insertionSort(list):
     for i in range(1, len(list)):
         key = list[i]
-        j = i-1
-        while j >= 0 and key < list[j]:
-            list[j + 1] = list[j]
+        j = i
+        while j > 0 and key < list[j-1]:
+            list[j] = list[j-1]
             j -= 1
-            list[j + 1] = key
+        list[j] = key
             
             
 def selectionSort(list):
-    for i in range(len(list)):
+    for i in range(len(list)-1):
         min_idx = i
         for j in range(i+1, len(list)):
             if list[min_idx] > list[j]:
                 min_idx = j
+        if i!=min_idx:
+            list[min_idx] , list[i]= list[i] , list[min_idx]           
+                
 
 '''Test function'''
 def test(sizes):
@@ -162,11 +165,11 @@ def test(sizes):
      
 '''Test cases'''
 
-test([100,500,1000,5000,10000,25000,50000,100000])
+# test([100,1000,5000,10000,25000,50000,100000])
 # Randomly generated array with 50 unique items between 0 and 10000
 arr = [7838, 5511, 7617, 2935, 4619, 5409, 8602, 1042, 5390, 45, 8110, 3545, 5761, 1666, 5165, 7909, 5178, 2881, 7013, 1104, 9763, 4813, 7043, 7048, 4996, 416, 7076, 5565, 4501, 4680, 5827, 
      644, 4566, 3433, 8059, 7132, 780, 7587, 9155, 302, 2742, 141, 7106, 2507, 367, 2384, 6272, 323, 148, 930]
-# finding the 8th smallest element in the array which is 644
-print(quickSelect(arr,8))
+quickSort(arr,0,len(arr)-1)
+print(arr)
 # hybrid sort of the array 
 # hybridSort(arr)
