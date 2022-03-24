@@ -1,5 +1,6 @@
 
 # Imports
+from operator import le
 from random import randrange as rnd
 from time import time
 from copy import deepcopy
@@ -22,47 +23,48 @@ def rndUniqueList(size,min,max):
 '''Merge sort and hybrid merge sort'''
 
 def merge(list,left,mid,right):
-    s1 = mid-left+1
-    s2 = right - mid
-    L = [0] * (s1)
-    R = [0] * (s2)
-
-    for i in range(0, s1):
-        L[i] = list[left+i]
-
-    for j in range(0, s2):
-        R[j] = list[mid + 1 + j]
-
-    i = 0
-    j = 0
-    k = 0
-    while i < s1 and j < s2:
-        if L[i] <= R[j]:
-            list[k] = L[i]
-            i += 1
+    nL = mid - left + 1
+    nH = right - mid
+    aL=[]
+    aH=[]
+    
+    for i in range(left,mid+1):
+        aL.append(list[i])
+     
+    for j in range(mid+1,right+1):
+        aH.append(list[j])  
+         
+    i,j=0,0
+    k=left
+    while i<nL and j<nH:
+        if aL[i] <= aH[j]:
+            list[k]=aL[i]
+            k+=1
+            i+=1
         else:
-            list[k] = R[j]
-            j += 1
-        k += 1
-    while i < s1:
-        list[k] = L[i]
-        i += 1
-        k += 1
-    while j < s2:
-        list[k] = R[j]
-        j += 1
-        k += 1
+            list[k]=aH[j]
+            k+=1
+            j+=1   
+    while i<nL:
+        list[k]=aL[i]
+        k+=1
+        i+=1
+    while j<nH:
+        list[k]=aH[j]
+        k+=1
+        j+=1
 
 
-def mergesort(list,left,right):
+def mergeSort(test_array,left,right):
     if left < right:
-       mid = (left + (right - 1))//2
-       mergesort(list, left, mid)
-       mergesort(list, mid + 1, right)
-       merge(list, left, mid, right)
+       mid = (left+right)//2
+       mergeSort(test_array, left, mid)
+       mergeSort(test_array, mid + 1, right)
+       merge(test_array, left, mid, right)
 
 
-def hybridsort(list):
+
+def hybridSort(list):
     pass
 
 
@@ -134,17 +136,17 @@ def selectionSort(list):
 def test(sizes):
     for size in sizes:
         print('Testing using sample of size =',size)
-        rndList = rndUniqueList(size,0,20000)
+        rndList = rndUniqueList(size,0,200000)
         testList = deepcopy(rndList)
         begin = time()
         quickSort(testList,0,len(testList)-1)
         end = time()
         print('\nRunning time for Quick Sort is '+str((end-begin)*1000)+' ms')
-        # testList = deepcopy(rndList)
-        # begin = time()
-        # mergesort()
-        # end = time()
-        # print('Running time for Merge Sort is '+str((end-begin)*1000)+' ms')
+        testList = deepcopy(rndList)
+        begin = time()
+        mergeSort(testList,0,len(testList)-1)  
+        end = time()
+        print('Running time for Merge Sort is '+str((end-begin)*1000)+' ms')
         testList = deepcopy(rndList)
         begin = time()
         selectionSort(testList)
@@ -155,13 +157,16 @@ def test(sizes):
         insertionSort(testList)
         end = time()
         print('Running time for Insertion Sort is '+str((end-begin)*1000)+' ms\n\n')
+        rndList.clear()
 
      
 '''Test cases'''
 
-# test([1000,10000,25000,50000,100000])
-# # Randomly generated array with 50 unique items between 0 and 10000
-# arr = [7838, 5511, 7617, 2935, 4619, 5409, 8602, 1042, 5390, 45, 8110, 3545, 5761, 1666, 5165, 7909, 5178, 2881, 7013, 1104, 9763, 4813, 7043, 7048, 4996, 416, 7076, 5565, 4501, 4680, 5827, 
-#      644, 4566, 3433, 8059, 7132, 780, 7587, 9155, 302, 2742, 141, 7106, 2507, 367, 2384, 6272, 323, 148, 930]
-# # # finding the 8th smallest element in the array which is 644
-# quickSelect(arr,8)
+test([100,500,1000,5000,10000,25000,50000,100000])
+# Randomly generated array with 50 unique items between 0 and 10000
+arr = [7838, 5511, 7617, 2935, 4619, 5409, 8602, 1042, 5390, 45, 8110, 3545, 5761, 1666, 5165, 7909, 5178, 2881, 7013, 1104, 9763, 4813, 7043, 7048, 4996, 416, 7076, 5565, 4501, 4680, 5827, 
+     644, 4566, 3433, 8059, 7132, 780, 7587, 9155, 302, 2742, 141, 7106, 2507, 367, 2384, 6272, 323, 148, 930]
+# finding the 8th smallest element in the array which is 644
+print(quickSelect(arr,8))
+# hybrid sort of the array 
+# hybridSort(arr)
