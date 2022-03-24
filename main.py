@@ -96,22 +96,15 @@ def quickSort(list,left,right):
         quickSort(list,pivotIndex+1,right)
 
 
-def quickSelect(list,k):
-    pivot=list[partition(list,0,len(list)-1)]
-    aL = []
-    aH = []
-    for i in range(len(list)):
-        if list[i] < pivot:
-            aL.append(list[i])
-        elif  list[i] > pivot:
-            aH.append(list[i])  
-    if k <=  len(aL):
-        return quickSelect(aL,k)
-    elif k > len(list) - len(aH):
-        return quickSelect(aH,k - (len(list) - len(aH)))
-  
-    return pivot 
-
+def quickSelect(list,k,left,right):
+    pivot=partition(list,left,right)
+    if k==(pivot+1):
+        return list[pivot]
+    elif k < pivot:
+        return quickSelect(list,k,left,pivot-1)
+    else:
+        return quickSelect(list,k,pivot+1,right)
+     
 
 '''Inesertion sort and selection sort'''
 
@@ -169,7 +162,6 @@ def test(sizes):
 # Randomly generated array with 50 unique items between 0 and 10000
 arr = [7838, 5511, 7617, 2935, 4619, 5409, 8602, 1042, 5390, 45, 8110, 3545, 5761, 1666, 5165, 7909, 5178, 2881, 7013, 1104, 9763, 4813, 7043, 7048, 4996, 416, 7076, 5565, 4501, 4680, 5827, 
      644, 4566, 3433, 8059, 7132, 780, 7587, 9155, 302, 2742, 141, 7106, 2507, 367, 2384, 6272, 323, 148, 930]
-quickSort(arr,0,len(arr)-1)
-print(arr)
+print(quickSelect(arr,8,0,len(arr)-1))
 # hybrid sort of the array 
 # hybridSort(arr)

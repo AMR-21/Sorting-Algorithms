@@ -1,1 +1,1 @@
-print(quickSelect(arr,8))
+quickSelect(arr,8,0,len(arr)-1)
